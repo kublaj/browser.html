@@ -15,7 +15,7 @@ define((require, exports, module) => {
   const {DOM} = require('react');
   const ClassSet = require('./util/class-set');
 
-  const WebViewer = Component('WebViewer', ({item: webViewerCursor}, {onOpen, onClose}) => {
+  const WebViewer = Component('WebViewer', ({item: webViewerCursor, onOpen, onClose}) => {
 
     // Do not render anything unless viewer has any `uri`
     if (!webViewerCursor.get('uri')) return null;
@@ -73,6 +73,8 @@ define((require, exports, module) => {
     isLoading: true,
     isConnecting: true,
     startLoadingTime: performance.now(),
+    progress: 0,
+    icons: null,
     icons: {},
     title: null,
     location: null,
@@ -92,7 +94,7 @@ define((require, exports, module) => {
     }
     return webViewerCursor.merge({
       isConnecting: false,
-      endLoadingTime: performance.now(),
+      connectedAt: performance.now(),
       readyState: 'loaded',
       isLoading: false
     });
@@ -136,9 +138,7 @@ define((require, exports, module) => {
     }
   }
 
-  // WebViewer deck will always inject frames by order of their id. That way
-  // no iframes will need to be removed / injected when order of tabs change.
-  WebViewer.Deck = Deck(WebViewer, item => item.get('id'));
+  WebViewer.Deck = Deck(WebViewer);
   // Exports:
 
   exports.WebViewer = WebViewer;

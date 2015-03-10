@@ -94,7 +94,6 @@ main.showtabstrip .tab-thumbnail {
   background-color: #444;
   border-radius: 50%;
   color: white;
-  border: var(--hwd-pixel) solid white;
 }
 
 .tab:hover .tab-close-button {
