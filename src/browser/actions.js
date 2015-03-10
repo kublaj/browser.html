@@ -36,12 +36,9 @@ define((require, exports, module) => {
   // Creates a blank session. Returns immutable map.
   const resetSession = () => fromJS({
     isDocumentFocused: document.hasFocus(),
-    os: navigator.platform.startsWith('Win') ? 'windows' :
-    navigator.platform.startsWith('Mac') ? 'osx' :
-    navigator.platform.startsWith('Linux') ? 'linux' :
-    '',
     input: {value: '', isFocused: false},
     tabStrip: {isActive: false},
+    rfa: {id: -1},
     webViewers: [open({isSelected: true,
                        isActive: true,
                        isFocused: true,
@@ -73,8 +70,6 @@ define((require, exports, module) => {
     tabStripCursor.set('isActive', true);
   exports.hideTabStrip = tabStripCursor =>
     tabStripCursor.set('isActive', false);
-  exports.resetSelected = webViewersCursor =>
-    webViewersCursor.update(items => select(items, active(items)));
   exports.resetSession = resetSession;
   exports.readSession = readSession;
   exports.writeSession = writeSession;
